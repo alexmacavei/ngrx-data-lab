@@ -1,18 +1,24 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core';
+import { AppStoreModule } from './store/app-store.module';
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'heroes' },
+  { path: 'heroes', loadChildren: './heroes/heroes.module#HeroesModule' },
+  {
+    path: 'villains',
+    loadChildren: './villains/villains.module#VillainsModule'
+  }
+];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
+  imports: [BrowserModule, BrowserAnimationsModule, CoreModule, HttpClientModule, RouterModule.forRoot(routes), AppStoreModule],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
